@@ -2,11 +2,11 @@
 	'use strict';
 
 	var gulp = require('gulp'),
-	nodemon = require('gulp-nodemon'),
-	watch = require('gulp-watch'),
-	jshint = require('gulp-jshint'),
-	livereload = require('gulp-livereload'),
-	_paths = ['*.js', 'server/**/*.js', 'client/js/*.js'];
+		nodemon = require('gulp-nodemon'),
+		watch = require('gulp-watch'),
+		jshint = require('gulp-jshint'),
+		livereload = require('gulp-livereload'),
+		_paths = ['app.js', 'server/**/*.js'];
 
 	// Register nodemon task
 	gulp.task('nodemon', function() {
