@@ -5,39 +5,27 @@
 		mongoose = require('mongoose'),
 		Schema = mongoose.Schema;
 
-	var PostSchema = new Schema({
-		title: {
-			type: String,
+	var CommentSchema = new Schema({
+		post: {
+			type: Number,
 			required: true
 		},
-		author: {
-			type: String,
-			required: true
+		parent: {
+			type: Number,
+			default: 0
 		},
 		body: String,
-		status: {
-			type: String,
-			required: true,
-			enum: ['new', 'draft', 'rejected', 'published']
+		author: {
+			type: Number,
+			required: true
 		},
-		hidden: Boolean,
-		meta: {
-			votes: Number,
-			favs: Number
-		},
-		tags: Array,
-		categories: Array,
-		created_date: {
-			type: Date,
-			default: Date.now
-		},
-		updated_date: {
+		date: {
 			type: Date,
 			default: Date.now
 		}
 	});
 
-	var Post = mongoose.model('Post', PostSchema, 'posts');
+	var Comment = mongoose.model('Comment', CommentSchema, 'comments');
 
-	module.exports = Post;
+	module.exports = Comment;
 })();

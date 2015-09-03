@@ -2,25 +2,39 @@
 	'use strict';
 
 	var Promise = require('bluebird'),
-		PostModel = require('./model'),
-		_ = require('lodash');
+		CommentModel = require('./model');
 
 	module.exports = {
-		getAll: function() {
-			console.log('I am called');
+		getAll: function(postId) {
 			return new Promise(function(resolve, reject) {
-				PostModel
-					.find({})
-					.select({
-						_id: false,
-						title: true,
-						author: true,
-						date: true
+				CommentModel
+					.find({
+						post: postId,
+						parent: 0
 					})
 					.then(function(result) {
+						return generateCommentTree();
+					})
+					.then(function() {
 						resolve(toResponseJson(result));
 					})
 					.catch(reject);
+			});
+		},
+		getCountByPost: function(postId) {
+			return new Promise(function(resolve, reject) {
+				CommentModel.count({
+					post: postId,
+					parent: 0
+				}, function(err, count) {
+					if (err) reject(err);
+					resolve(count);
+				});
+			});
+		},
+		create: function(comment) {
+			return new Promise(function(resolve, reject) {
+				new CommentModel(comment).save().then(resolve).onReject(reject);
 			});
 		}
 	};
@@ -28,12 +42,8 @@
 	function toResponseJson(result) {
 		return {
 			success: true,
-			count: _.size(result),
-			result: addCommentCount(result)
+			count: result.length,
+			result: result
 		};
-	};
-
-	function addCommentCount(result) {
-
 	}
 })();
