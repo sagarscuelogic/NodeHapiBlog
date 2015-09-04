@@ -7,14 +7,18 @@
 
 	var CommentSchema = new Schema({
 		post: {
-			type: Number,
+			type: Schema.Types.ObjectId,
+			ref: "post",
 			required: true
 		},
 		parent: {
 			type: Number,
 			default: 0
 		},
-		body: String,
+		body: {
+			type: String,
+			required: true
+		},
 		author: {
 			type: Number,
 			required: true

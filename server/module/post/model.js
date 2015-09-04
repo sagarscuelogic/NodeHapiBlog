@@ -14,13 +14,20 @@
 			type: String,
 			required: true
 		},
-		body: String,
+		body: {
+			type: String,
+			required: true
+		},
 		status: {
 			type: String,
 			required: true,
-			enum: ['new', 'draft', 'rejected', 'published']
+			enum: ['new', 'draft', 'rejected', 'published'],
+			default: 'new'
 		},
-		hidden: Boolean,
+		hidden: {
+			type: Boolean,
+			default: true
+		},
 		meta: {
 			votes: Number,
 			favs: Number

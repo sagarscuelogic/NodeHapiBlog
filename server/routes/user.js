@@ -2,25 +2,25 @@
 	'use strict';
 
 	var Joi = require('joi'),
-		PostController = require('../module/post/controller');
+		UserController = require('../module/user/controller');
 
 	module.exports = [{
 		method: 'GET',
-		path: '/post',
-		handler: PostController.getAll,
+		path: '/user',
+		handler: UserController.getAll,
 		config: {
 			auth: false,
-			description: 'Gets list of all posts',
+			description: 'Gets list of all users',
 			tags: ['api'],
-			notes: 'Returns a list of all posts'
+			notes: 'Returns a list of all users'
 		}
 	}, {
 		method: 'POST',
-		path: '/post',
-		handler: PostController.add,
+		path: '/user',
+		handler: UserController.add,
 		config: {
 			auth: false,
-			description: 'Create new Post',
+			description: 'Create new User',
 			tags: ['api'],
 			notes: 'Returns success status and id of new record created',
 			validate: {
@@ -37,13 +37,13 @@
 		}
 	}, {
 		method: 'GET',
-		path: '/post/{id}',
-		handler: PostController.getOne,
+		path: '/user/{id}',
+		handler: UserController.getOne,
 		config: {
 			auth: false,
-			description: 'Gets one specific post',
+			description: 'Gets one specific user',
 			tags: ['api'],
-			notes: 'Returns requested post object',
+			notes: 'Returns requested user object',
 			validate: {
 				params: {
 					id: Joi.string().required()
@@ -55,13 +55,13 @@
 		}
 	}, {
 		method: 'PUT',
-		path: '/post/{id}',
-		handler: PostController.edit,
+		path: '/user/{id}',
+		handler: UserController.edit,
 		config: {
 			auth: false,
-			description: 'Update a post',
+			description: 'Update a user',
 			tags: ['api'],
-			notes: 'Returns a list of all posts',
+			notes: 'Returns a list of all users',
 			validate: {
 				params: {
 					id: Joi.string().required()
@@ -79,13 +79,13 @@
 		}
 	}, {
 		method: 'DELETE',
-		path: '/post/{id}',
-		handler: PostController.delete,
+		path: '/user/{id}',
+		handler: UserController.delete,
 		config: {
 			auth: false,
-			description: 'Gets list of all posts',
+			description: 'Gets list of all users',
 			tags: ['api'],
-			notes: 'Returns a list of all posts',
+			notes: 'Returns a list of all users',
 			validate: {
 				params: {
 					id: Joi.string().required()

@@ -2,28 +2,70 @@
 	'use strict';
 
 	var Joi = require('joi'),
-		PostController = require('../module/post/controller');
+		CommentController = require('../module/comment/controller');
 
 	module.exports = [{
 		method: 'GET',
-		path: '/post',
-		handler: PostController.getAll,
+		path: '/comment',
+		handler: CommentController.getAll,
 		config: {
 			auth: false,
-			description: 'Gets list of all posts',
+			description: 'Gets list of all comments',
 			tags: ['api'],
-			notes: 'Returns a list of all posts'
+			notes: 'Returns a list of all comments'
 		}
 	}, {
 		method: 'POST',
-		path: '/post',
-		handler: PostController.add,
+		path: '/comment',
+		handler: CommentController.add,
 		config: {
 			auth: false,
-			description: 'Create new Post',
+			description: 'Create new Comment',
 			tags: ['api'],
 			notes: 'Returns success status and id of new record created',
 			validate: {
+				payload: {
+					post: Joi.string().required(),
+					parent: Joi.string().required(),
+					body: Joi.string().required(),
+					author: Joi.string().required()
+				},
+				failAction: function(req, reply, source, error) {
+					reply(error);
+				}
+			}
+		}
+	}, {
+		method: 'GET',
+		path: '/comment/{id}',
+		handler: CommentController.getOne,
+		config: {
+			auth: false,
+			description: 'Gets one specific comment',
+			tags: ['api'],
+			notes: 'Returns requested comment object',
+			validate: {
+				params: {
+					id: Joi.string().required()
+				},
+				failAction: function(req, reply, source, error) {
+					reply(error);
+				}
+			}
+		}
+	}, {
+		method: 'PUT',
+		path: '/comment/{id}',
+		handler: CommentController.edit,
+		config: {
+			auth: false,
+			description: 'Update a comment',
+			tags: ['api'],
+			notes: 'Returns a list of all comments',
+			validate: {
+				params: {
+					id: Joi.string().required()
+				},
 				payload: {
 					title: Joi.string().required(),
 					author: Joi.string().required(),
@@ -36,56 +78,14 @@
 			}
 		}
 	}, {
-		method: 'GET',
-		path: '/post/{id}',
-		handler: PostController.getOne,
-		config: {
-			auth: false,
-			description: 'Gets one specific post',
-			tags: ['api'],
-			notes: 'Returns requested post object',
-			validate: {
-				params: {
-					id: Joi.string().required()
-				},
-				failAction: function(req, reply, source, error) {
-					reply(error);
-				}
-			}
-		}
-	}, {
-		method: 'PUT',
-		path: '/post/{id}',
-		handler: PostController.edit,
-		config: {
-			auth: false,
-			description: 'Update a post',
-			tags: ['api'],
-			notes: 'Returns a list of all posts',
-			validate: {
-				params: {
-					id: Joi.string().required()
-				},
-				payload: {
-					title: Joi.string().required(),
-					author: Joi.string().required(),
-					body: Joi.string(),
-					status: Joi.string().required()
-				},
-				failAction: function(req, reply, source, error) {
-					reply(error);
-				}
-			}
-		}
-	}, {
 		method: 'DELETE',
-		path: '/post/{id}',
-		handler: PostController.delete,
+		path: '/comment/{id}',
+		handler: CommentController.delete,
 		config: {
 			auth: false,
-			description: 'Gets list of all posts',
+			description: 'Gets list of all comments',
 			tags: ['api'],
-			notes: 'Returns a list of all posts',
+			notes: 'Returns a list of all comments',
 			validate: {
 				params: {
 					id: Joi.string().required()
