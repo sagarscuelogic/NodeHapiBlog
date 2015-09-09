@@ -7,6 +7,7 @@
 		pkg = require('./package'),
 		log = require('winston'),
 		mongoose = require('mongoose'),
+		Posts = require('./server/module/post/plugin'),
 		server;
 
 	server = new Hapi.Server();
@@ -23,6 +24,18 @@
 		options: {
 			routesDir: __dirname + '/server/routes/'
 		},
+	}, function(err) {
+		if (err) {
+			throw err;
+		}
+	});
+
+	server.register({
+		register: Posts,
+		options: {
+			basePath: '',
+			apiVersion: pkg.version
+		}
 	}, function(err) {
 		if (err) {
 			throw err;

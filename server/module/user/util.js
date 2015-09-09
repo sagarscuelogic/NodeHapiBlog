@@ -16,9 +16,8 @@
 			UserModel
 				.find({})
 				.select({
-					_id: true,
-					name: true,
-					role: true
+					id: true,
+					email: true
 				})
 				.then(function(result) {
 					resolve(commonFunctions.toResponseJson(result));

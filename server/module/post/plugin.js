@@ -2,9 +2,11 @@
 	'use strict';
 
 	var Joi = require('joi'),
-		PostController = require('../module/post/controller');
+		PostController = require('./controller'),
+		plugin,
+		routes;
 
-	module.exports = [{
+	routes = [{
 		method: 'GET',
 		path: '/post',
 		handler: PostController.getAll,
@@ -96,4 +98,22 @@
 			}
 		}
 	}];
+
+	plugin = {
+		register: function(server, options, next) {
+			if (Array.isArray(routes) && routes.length) {
+				for (var i = 0; i < routes.length; i++) {
+					server.route(routes[i]);
+				}
+				next();
+			}
+		}
+	};
+
+	plugin.register.attributes = {
+		name: 'posts',
+		version: '1.0.0'
+	};
+
+	module.exports = plugin;
 })();
