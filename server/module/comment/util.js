@@ -3,7 +3,9 @@
 
 	var Promise = require('bluebird'),
 		CommentModel = require('./model'),
-		commonFunctions = require('../../common/commonFunctions');
+		commonFunctions = require('../../common/commonFunctions'),
+		ObjectId = require('mongoose').Schema.ObjectId,
+		postId;
 
 	module.exports = {
 		getAll: getAll,
@@ -16,13 +18,13 @@
 			CommentModel
 				.find({
 					post: postId,
-					parent: parent || 0
+					parent: parent || null
 				})
 				.then(function(result) {
 					return generateCommentTree(postId, result);
 				})
-				.then(function() {
-					resolve(commonFunctions.toResponseJson(result));
+				.then(function(result) {
+					resolve(parent ? result : commonFunctions.toResponseJson(result));
 				})
 				.catch(reject);
 		});
@@ -32,7 +34,7 @@
 		return new Promise(function(resolve, reject) {
 			CommentModel.count({
 				post: postId,
-				parent: 0
+				parent: null
 			}, function(err, count) {
 				if (err) reject(err);
 				resolve(count);
@@ -42,10 +44,15 @@
 
 	function create(comment) {
 		return new Promise(function(resolve, reject) {
-			new CommentModel(comment)
-				.save()
-				.then(resolve)
-				.onReject(reject);
+			new CommentModel()
+				.save(comment, function(err, result) {
+					if(err) {
+						console.error('error cought at util');
+						console.trace(err.stack);
+						reject(err);
+					}
+					resolve(result);
+				});
 		});
 	}
 
@@ -53,10 +60,12 @@
 		if(Array.isArray(result)) {
 			var resultArray = [];
 			return Promise.each(result, function(comment) {
-				return getAll(postId, comment.id)
+				return getAll(comment.post, comment.id)
 					.then(function(result) {
-						comment = post.toObject();
+						comment = comment.toObject();
 						comment.children = result;
+						delete comment.post;
+						delete comment.parent;
 						resultArray.push(comment);
 					})
 					.catch(function(err) {

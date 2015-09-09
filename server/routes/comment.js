@@ -6,13 +6,18 @@
 
 	module.exports = [{
 		method: 'GET',
-		path: '/comment',
+		path: '/post/{id}/comments',
 		handler: CommentController.getAll,
 		config: {
 			auth: false,
-			description: 'Gets list of all comments',
+			description: 'Gets list of all comments for a post',
 			tags: ['api'],
-			notes: 'Returns a list of all comments'
+			notes: 'Returns a list of all comments for a post',
+			validate: {
+				params: {
+					id: Joi.string().required()
+				}
+			}
 		}
 	}, {
 		method: 'POST',
@@ -83,9 +88,9 @@
 		handler: CommentController.delete,
 		config: {
 			auth: false,
-			description: 'Gets list of all comments',
+			description: 'Deletes a specific comment',
 			tags: ['api'],
-			notes: 'Returns a list of all comments',
+			notes: 'Deletes a specific comment',
 			validate: {
 				params: {
 					id: Joi.string().required()

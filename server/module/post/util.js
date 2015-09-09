@@ -8,31 +8,33 @@
 		commonFunctions = require('../../common/commonFunctions');
 
 	module.exports = {
-		getAll: function(limit) {
-			return new Promise(function(resolve, reject) {
-				PostModel
-					.find({})
-					.select({
-						title: true,
-						author: true,
-						date: true
-					})
-					.limit(10)
-					.then(function(result) {
-						addCommentCount(result)
+		getAll: getAll
+	};
+
+	function getAll(limit) {
+		return new Promise(function(resolve, reject) {
+			PostModel
+				.find({})
+				.select({
+					title: true,
+					author: true,
+					date: true
+				})
+				.limit(10)
+				.then(function(result) {
+					addCommentCount(result)
 						.then(function(response) {
 							resolve(commonFunctions.toResponseJson(response));
 						});
-					})
-					.catch(function(error) {
-						reject(error);
-					});
-			});
-		}
-	};
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	}
 
 	function addCommentCount(result) {
-		if(Array.isArray(result)) {
+		if (Array.isArray(result)) {
 			var resultArray = [];
 			return Promise.each(result, function(post) {
 				return CommentUtil

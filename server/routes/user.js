@@ -83,9 +83,9 @@
 		handler: UserController.delete,
 		config: {
 			auth: false,
-			description: 'Gets list of all users',
+			description: 'Deletes a specific user',
 			tags: ['api'],
-			notes: 'Returns a list of all users',
+			notes: 'Deletes a specific user',
 			validate: {
 				params: {
 					id: Joi.string().required()

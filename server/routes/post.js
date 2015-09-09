@@ -83,9 +83,9 @@
 		handler: PostController.delete,
 		config: {
 			auth: false,
-			description: 'Gets list of all posts',
+			description: 'Deletes a specific post',
 			tags: ['api'],
-			notes: 'Returns a list of all posts',
+			notes: 'Deletes a specific post',
 			validate: {
 				params: {
 					id: Joi.string().required()

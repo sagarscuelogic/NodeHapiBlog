@@ -12,15 +12,17 @@
 			required: true
 		},
 		parent: {
-			type: Number,
-			default: 0
+			type: Schema.Types.ObjectId,
+			ref: 'comments',
+			default: null
 		},
 		body: {
 			type: String,
 			required: true
 		},
 		author: {
-			type: Number,
+			type: Schema.Types.ObjectId,
+			ref: 'users',
 			required: true
 		},
 		date: {
