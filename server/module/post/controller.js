@@ -20,22 +20,39 @@
 	}
 
 	function getOne(req, reply) {
-		reply({
-			message: 'API under development',
-			params: req.params
-		});
-
+		PostUtil
+			.getOne(req.params.id)
+			.then(reply)
+			.catch(function(err) {
+				reply(err);
+			});
 	}
 
 	function add(req, reply) {
-		reply('API under development');
+		PostUtil
+			.add(req.payload)
+			.then(reply)
+			.catch(function(err) {
+				console.trace(err.stack)
+				reply(err);
+			});
 	}
 
 	function edit(req, reply) {
-		reply('API under development');
+		PostUtil
+			.edit(req.params.id, req.payload)
+			.then(reply)
+			.catch(function(err) {
+				reply(err);
+			});
 	}
 
 	function deleteOne(req, reply) {
-		reply('API under development');
+		PostUtil
+			.delete(req.params.id)
+			.then(reply)
+			.catch(function(err) {
+				reply(err);
+			});
 	}
 })();

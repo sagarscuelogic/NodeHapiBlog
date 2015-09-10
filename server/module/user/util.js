@@ -16,7 +16,7 @@
 			UserModel
 				.find({})
 				.select({
-					id: true,
+					_id: true,
 					email: true
 				})
 				.then(function(result) {

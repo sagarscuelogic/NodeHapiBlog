@@ -4,7 +4,7 @@
   "description": "Blog application developed with Node, Hapi and Mongo",
   "main": "app.js",
   "scripts": {
-    "test": "mocha test/app-test.js",
+    "test": "mocha specs --require specs/helpers/chai.js --reporter spec",
     "start": "node app.js"
   },
   "author": "Sagar Sutaria",
@@ -28,6 +28,7 @@
     "gulp-nodemon": "~2.0.3",
     "chai": "~3.2.0",
     "superagent": "~1.3.0",
-    "mocha": "~2.3.2"
+    "mocha": "~2.3.2",
+    "sinon": "~1.16.1"
   }
 }
